@@ -68,61 +68,41 @@ function createStore (reducer) {
   store.subscribe(() => {
     console.log('The new state is: ', store.getState())
   })
+
+  function generateId () {
+    return Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36);
+  }
+
+  function addTodo () {
+    const input = document.getElementById('todo')
+    const name = input.value
+    input.value = ''
+
+    store.dispatch({
+        type: ADD_TODO,
+        todo: {
+        id: generateId(),
+        name: name,
+        complete: false,
+        }
+    })
+
+  }
+
+  function addGoal () {
+    const input = document.getElementById('giak')
+    const name = input.value
+    input.value = ''
+
+    store.dispatch({
+        type: ADD_GOAL,
+        goal: {
+        id: generateId(),
+        name: name
+        }
+    })
+  }
+
+  document.getElementById('todoBtn').addEventListener('click', addTodo)
+  document.getElementById('goalBtn').addEventListener('click', addGoal)
   
-  store.dispatch({
-    type: ADD_TODO,
-    todo: {
-      id: 0,
-      name: 'Walk the dog',
-      complete: false,
-    }
-  })
-  
-  store.dispatch({
-    type: ADD_TODO,
-    todo: {
-      id: 1,
-      name: 'Wash the car',
-      complete: false,
-    }
-  })
-  
-  store.dispatch({
-    type: ADD_TODO,
-    todo: {
-      id: 2,
-      name: 'Go to the gym',
-      complete: true,
-    }
-  })
-  
-  store.dispatch({
-    type: REMOVE_TODO,
-    id: 1
-  })
-  
-  store.dispatch({
-    type: TOGGLE_TODO,
-    id: 0
-  })
-  
-  store.dispatch({
-    type: ADD_GOAL,
-    goal: {
-      id: 0,
-      name: 'Learn Redux'
-    }
-  })
-  
-  store.dispatch({
-    type: ADD_GOAL,
-    goal: {
-      id: 1,
-      name: 'Lose 20 pounds'
-    }
-  })
-  
-  store.dispatch({
-    type: REMOVE_GOAL,
-    id: 0
-  })
